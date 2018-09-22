@@ -1,0 +1,198 @@
+# Busca binária
+
+// recursivo:
+
+BUSCA-BINÁRIA (V[], início, fim, e)
+    i recebe o índice do meio entre início e fim
+    se (v[i] = e) entao
+        devolva o índice i   # elemento e encontrado
+    fimse
+    se (inicio = fim) entao
+        não encontrou o elemento procurado
+    senão
+       se (V[i] vem antes de e) então
+          faça a BUSCA-BINÁRIA(V, i+1, fim, e)
+       senão
+          faça a BUSCA-BINÁRIA(V, inicio, i-1, e)
+       fimse
+    fimse
+
+// iterativo;
+function binary_search(A, n, T):
+    L := 0
+    R := n − 1
+    while L <= R:
+        m := meio((L + R) / 2)
+        if A[m] < T:
+            L := m + 1
+        else if A[m] > T:
+            R := m - 1
+        else:
+            return m
+    return unsuccessful
+
+***
+
+//Implementação Iterativa:
+
+PesquisaBinaria ( vet[],  chave,  Tam)
+{
+     inf := 0;     // limite inferior (o primeiro índice de vetor em C é zero          )
+     sup := Tam-1; // limite superior (termina em um número a menos. 0 a 9 são 10 números)
+     meio;
+     while (inf <:= sup)
+     {
+          meio := (inf + sup)/2;
+          if (chave == vet[meio])
+               return meio;
+          if (chave < vet[meio])
+               sup := meio-1;
+          else
+               inf := meio+1;
+     }
+     return -1;   // não encontrado
+}
+
+//Implementação Recursiva:
+
+// x => chave | v[] => vetor ordenado | e => limite inferior (esquerda) | d => limite superior (direita)
+PesquisaBinaria ( x,  v[],  e,  d)
+{
+ meio := (e + d)/2;
+ if (v[meio] == x)
+    return meio;
+ if (e >:= d)
+    return -1; // não encontrado
+ else
+     if (v[meio] < x)
+        return PesquisaBinaria(x, v, meio+1,      d);
+     else
+        return PesquisaBinaria(x, v,      e, meio-1);
+}
+------------------------------------------------------------------------------
+# Search tree:
+
+Searching for a Specific Key
+Assuming the tree is ordered, we can take a key and attempt to locate it within the tree. The following algorithms are generalized for binary search trees, but the same idea can be applied to trees of other formats
+
+
+Recursive
+
+search-recursive(key, node)
+    if node is NULL
+        return EMPTY_TREE
+    if key < node.key
+        return search-recursive(key, node.left)
+    else if key > node.key
+        return search-recursive(key, node.right)
+    else
+        return node
+
+
+Iterative
+
+searchIterative(key, node)
+    currentNode := node
+    while currentNode is not NULL
+        if currentNode.key = key
+            return currentNode
+        else if currentNode.key > key
+            currentNode := currentNode.left
+        else
+            currentNode := currentNode.right
+
+------------------------------------------------------------------------------
+# Searching for Min and Max
+
+In a sorted tree, the minimum is located at the node farthest left, while the maximum is located at the node farthest right.
+
+Minimum
+
+findMinimum(node)
+    if node is NULL
+        return EMPTY_TREE
+    min := node
+    while min.left is not NULL
+        min := min.left
+    return min.key
+
+Maximum
+
+findMaximum(node)
+    if node is NULL
+        return EMPTY_TREE
+    max := node
+    while max.right is not NULL
+        max := max.right
+    return max.key
+
+------------------------------------------------------------------------------
+# Depth-first search (DFS)
+
+A recursive implementation of DFS:
+
+1  procedure DFS(G,v):
+2      label v as discovered
+3      for all edges from v to w in G.adjacentEdges(v) do
+4          if vertex w is not labeled as discovered then
+5              recursively call DFS(G,w)
+
+
+A non-recursive implementation of DFS:
+
+1  procedure DFS-iterative(G,v):
+2      let S be a stack
+3      S.push(v)
+4      while S is not empty
+5          v = S.pop()
+6          if v is not labeled as discovered:
+7              label v as discovered
+8              for all edges from v to w in G.adjacentEdges(v) do 
+9                  S.push(w)
+
+The non-recursive implementation is similar to breadth-first search but differs from it in two ways:
+
+1. it uses a stack instead of a queue, and
+2. it delays checking whether a vertex has been discovered until the vertex is popped from the stack rather than making this check before adding the vertex.
+
+------------------------------------------------------------------------------
+# Breadth First Search (BFS)
+
+BFS (G, s)                   //Where G is the graph and s is the source node
+      let Q be queue.
+      Q.enqueue( s ) //Inserting s in queue until all its neighbour vertices are marked.
+
+      mark s as visited.
+      while ( Q is not empty)
+           //Removing that vertex from queue,whose neighbour will be visited now
+           v  =  Q.dequeue( )
+
+          //processing all the neighbours of v  
+          for all neighbours w of v in Graph G
+               if w is not visited 
+                        Q.enqueue( w )             //Stores w in Q to further visit its neighbour
+                        mark w as visited.
+                        
+------------------------------------------------------------------------------
+# Hash-Based Search
+
+loadTable(size,C)
+	A = new array of given size
+	for i := 0 to n-1 do
+		h := hash(C[i])
+		if(A[h] is empty) then
+			A[h] := new Linked Lisk
+		add C[i] to A[h]
+	return A
+end
+
+search(A,t)
+	h := hash(t)
+	list := A[h]
+	if(list is empty) then
+		return false
+	if(list contains t) then
+		return true
+	return false
+end
+------------------------------------------------------------------------------
