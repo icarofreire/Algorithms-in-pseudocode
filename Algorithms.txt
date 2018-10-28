@@ -1,4 +1,4 @@
-# Busca binária
+﻿# Busca binária
 
 // recursivo:
 
@@ -195,4 +195,61 @@ search(A,t)
 		return true
 	return false
 end
+------------------------------------------------------------------------------
+# Jump Search (Busca em matrizes ordenadas):
+
+/* Salta N passos até encontrar um elemento maior que o procurado, uma vez encontrado, realiza uma busca linear iniciando do ultimo passo(Salto) cujo elemento era menor que o procurado, até encontrar o elemento desejado. */
+
+    // Encontrando o tamanho do bloco a ser saltado;
+    int step = raiz_quadrada(n);
+ 
+    // Encontrando o bloco(saltando de bloco em bloco) onde o elemento está presente (se estiver presente);
+    int prev = 0;
+    while (array[min(step, n)-1] < x)
+    {
+        prev = step;
+        step += raiz_quadrada(n);
+        if (prev >= n)
+            return -1;
+    }
+ 
+    // Fazendo uma busca linear por x em bloco começando com prev;
+    while (array[prev] < x)
+    {
+        prev++;
+ 
+        // Se chegarmos ao próximo bloco ou ao fim do array, o elemento não está presente;
+        if (prev == min(step, n))
+            return -1;
+    }
+
+    // Se o elemento for encontrado;
+    if (array[prev] == x)
+        return prev;
+ 
+    return -1;
+------------------------------------------------------------------------------
+# Busca Exponencial (Busca em matrizes ordenadas):
+/*
+O algoritmo consiste em dois estágios. O primeiro estágio determina um intervalo no qual a chave de pesquisa residiria se estivesse na lista. No segundo estágio, uma pesquisa binária é executada nesse intervalo.
+*/
+
+Busca_Exponencial(T array[], int size, T key)
+{
+    if (size == 0) {
+        return NOT_FOUND;
+    }
+    
+/* Em cada etapa, o algoritmo compara o valor da chave de pesquisa com o valor da chave no índice de pesquisa atual. Se o elemento no índice atual for menor que a chave de pesquisa, o algoritmo se repetirá, pulando para o próximo índice de pesquisa, duplicando-o, calculando a próxima potência de 2. */
+
+    int limite = 1;
+    while (limite < size && array[limite] < key) {
+        limite *= 2;
+    }
+
+/* Se o elemento no índice atual for maior que a chave de pesquisa, o algoritmo agora sabe que a chave de pesquisa, se estiver contida na lista, está localizada no intervalo formado pelo índice de pesquisa anterior, e o índice de pesquisa atual. */
+
+    // BUSCA-BINÁRIA;
+    return binary_search(array, key, limite/2, min(limite + 1, size));
+}
 ------------------------------------------------------------------------------
