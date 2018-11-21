@@ -253,3 +253,34 @@ Busca_Exponencial(T array[], int size, T key)
     return binary_search(array, key, limite/2, min(limite + 1, size));
 }
 ------------------------------------------------------------------------------
+# Algoritmo de Dijkstra:
+
+função Dijkstra(Grafo, origem):
+
+     cria conjunto de vértices Q
+
+     para cada vertice v em Grafo:
+         distancia[v] <- INFINITO
+         vertice_anterior[v] <- INDEFINIDO
+         adicione v em Q
+
+      /* \/ configure-o para zero para o nosso nó inicial e para o infinito para todos os outros nós. Defina o nó inicial como atual. */	
+      distancia[origem] <- 0
+      
+      enquanto Q não vazio:
+	  
+	  /* \/ Para o nó atual, considere todos os seus vizinhos não-visitados e encontrar o vértice com valor mínimo de distância calculado anteriormente; */
+          u <- vertice em Q com distancia[u] minima
+
+	  /* \/ Quando terminarmos de considerar todos os vizinhos não visitados do nó atual, marque o nó atual como visitado e remova-o do conjunto não-visitado. Um nó visitado nunca será verificado novamente. */
+          remove u de Q 
+          
+          para cada vizinho v de u:
+	      /* \/ distancia do vertice atual + a distancia do atual com seu vizinho; */	
+              alt <- distancia[u] + tamanho(u, v) /* tamanho é a distancia entre os dois nós vizinhos u e v (u-v); */
+              if alt < distancia[v]: /* <= faz um comparativo para registrar a menor distancia nas tabelas abaixo (que serão consultadas na proxima interação);*/
+                  distancia[v] <- alt 
+                  vertice_anterior[v] <- u 
+
+      retorne distancia[], vertice_anterior[]
+------------------------------------------------------------------------------
