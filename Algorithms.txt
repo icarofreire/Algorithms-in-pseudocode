@@ -326,3 +326,23 @@ ALGORITMO-KRUSKAL(G)
                 UNION(u, v)
     return A
 ------------------------------------------------------------------------------
+// pseudocodigo do algoritmo de Prim usando Priority Queue;
+
+Procedure MSTPrim(Graph, source):
+    for each u in V
+        key[u] := inf
+        parent[u] := NULL
+    end for
+key[source] := 0
+Q = Priority_Queue()
+Q = V
+while Q is not empty
+    u -> Q.pop
+    for each v adjacent to i
+        if v belongs to Q and Edge(u,v) < key[v] // aqui Edge(u, v) representa o custo de edge(u, v);
+            parent[v] := u
+            key[v] := Edge(u, v)
+        end if
+    end for
+end while
+------------------------------------------------------------------------------
