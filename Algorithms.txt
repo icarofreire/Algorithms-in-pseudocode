@@ -255,6 +255,18 @@ Busca_Exponencial(T array[], int size, T key)
 ------------------------------------------------------------------------------
 # Algoritmo de Dijkstra:
 
+Anotações Algoritmo de Dijkstra;
+
++ O array de custos é atribuído como infinito para N vertices do grafo, e o array de vertices visitados é atribuído como falso para N vertices do grafo;
+
++ De todos os vertices relaxados guardados em um array, seleciona o vertice de menor valor (custo);
+
++ Registra o vertice de menor custo selecionado como visitado, e visita todos os vertices adjacentes a este vertice selecionado;
+
++ Relaxa todas as arestas onde, o custo de cada aresta somada ao valor do vertice atual for menor, que o valor do vertice adjacente(não-visitado) a esta aresta;
+
++ Faz o próximo relaxamento para os vertices adjacentes ao vertice de menor custo relaxado que já foi registrado no array de custos;
+
 função Dijkstra(Grafo, origem):
 
      cria conjunto de vértices Q
@@ -345,4 +357,55 @@ while Q is not empty
         end if
     end for
 end while
+------------------------------------------------------------------------------
+# Algoritmo de Bellman-Ford
+
++ O algoritmo Bellman-Ford simplesmente relaxa todas as arestas e faz isso |V| - 1 vezes, em que |V| é o número de vértices no grafo.
+
+Bellman_Ford(G,pesos,inicial)
+    para todo vertice ∈ V
+        λ[vertice] ← ∞
+        π[vertice] ← nulo
+
+    λ[inicial] ← 0
+
+    para i de 1 até |V| -1
+        para toda aresta = (u,v) ∈ A
+            se λ[v] > λ[u] + pesos(u,v) # relaxamento
+               λ[v] ← λ[u] + pesos(u,v)
+               π[v] ← u
+
+G é um grafo no formato G = (V,A), π[v] indica o predecessor de v, λ[v] é o custo de sair da origem e chegar até o vértice v e "inicial" é o vértice inicial. Após o término do algoritmo, para cada v pertencente aos vértices de G, π[v] → y representa uma aresta selecionada para a árvore geradora mínima (se y ≠ nulo) e, pensando em árvore, λ[v] representa a distância da raiz até o vértice v.
+
+---
+
+function BellmanFord(list vertices, list edges, vertex source) is
+    ::distance[], predecessor[]
+
+    // This implementation takes in a graph, represented as
+    // lists of vertices and edges, and fills two arrays
+    // (distance and predecessor) about the shortest path
+    // from the source to each vertex
+
+    // Step 1: initialize graph
+    for each vertex v in vertices do
+        distance[v] := inf             // Initialize the distance to all vertices to infinity
+        predecessor[v] := null         // And having a null predecessor
+    
+    distance[source] := 0              // The distance from the source to itself is, of course, zero
+
+    // Step 2: relax edges repeatedly
+    for i from 1 to size(vertices)−1 do //just |V|−1 repetitions; i is never referenced
+        for each edge (u, v) with weight w in edges do
+            if distance[u] + w < distance[v] then
+                distance[v] := distance[u] + w
+                predecessor[v] := u
+
+    // Step 3: check for negative-weight cycles
+    for each edge (u, v) with weight w in edges do
+        if distance[u] + w < distance[v] then
+            error "Graph contains a negative-weight cycle"
+
+    return distance[], predecessor[]
+
 ------------------------------------------------------------------------------
