@@ -409,3 +409,21 @@ function BellmanFord(list vertices, list edges, vertex source) is
     return distance[], predecessor[]
 
 ------------------------------------------------------------------------------
+# Algorithm Floyd-Warshall()
+//*Determines all-pairs shortest paths. The n vertices are V[i],i=0,1, ..., n-1
+
+for(v <- 0; v < n; v++) // initialize
+	for(w <- 0; w<n; w++)
+		dist[v][w] <- weight[v][w];
+		next[v][w] <- -1;
+
+for(u <- 0; u < n; u++)
+	for(v <- 0; v < n; v++)
+		for(w <- 0; w < n; w++)
+			// relax:
+			para cada vertice que conecta ao vertice fonte (u), somado a cada vertice adjacentes 
+ao escolhido; sendo menor a soma para cada vertice do grafo;
+			if( dist[v][w] > dist[v][u] + dist[u][w] )
+				dist[v][w] <- dist[v][u] + dist[u][w];
+				next[v][w] <- u;
+------------------------------------------------------------------------------
